@@ -1,9 +1,9 @@
 import "./App.css";
-
+import Dropdown from "./components/Dropdown.js";
 function App() {
   return (
     <div>
-      <h1>Crypto Currency Dashboard</h1>
+      <Dropdown />
     </div>
   );
 }
