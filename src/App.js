@@ -1,9 +1,11 @@
 import "./App.css";
-import Dropdown from "./components/Dropdown.js";
+import Searchbar from "./components/Searchbar";
+import Dropdown from "./components/dropdown.js";
 function App() {
   return (
-    <div>
+    <div className="flex flex-row bg-black">
       <Dropdown />
+      <Searchbar />
     </div>
   );
 }
