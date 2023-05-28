@@ -3,7 +3,7 @@ import Searchbar from "./components/Searchbar";
 import Dropdown from "./components/dropdown.js";
 function App() {
   return (
-    <div className="flex ">
+    <div className="flex mx-5">
       <Dropdown />
       <Searchbar />
     </div>

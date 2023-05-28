@@ -6,8 +6,12 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     setSelectedCurrency(event.target.value);
   };
   return (
-    <div>
-      <select value={selectedCurrency} onChange={handleSelectChange}>
+    <div className="mt-7 ml-7 mx-5">
+      <select
+        value={selectedCurrency}
+        onChange={handleSelectChange}
+        className="p-3 bg-white shadow-sm font-bold rounded"
+      >
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
