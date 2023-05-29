@@ -3,7 +3,7 @@ import { FiSearch } from "react-icons/fi";
 
 function Searchbar() {
   return (
-    <div className="mt-7 p-3 bg-white w-full rounded-md shadow-sm text-slate-400 font-display flex">
+    <div className="mt-7 h-11 p-3 bg-white w-full rounded-md shadow-sm text-slate-400 font-display flex">
       <FiSearch className="mr-3 ml-2 mt-1 " />
       <input
         type="text"
