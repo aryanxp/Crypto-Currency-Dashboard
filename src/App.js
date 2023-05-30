@@ -2,15 +2,27 @@ import "./App.css";
 import Searchbar from "./components/Searchbar";
 import Dropdown from "./components/dropdown.js";
 import ChartComponent from "./components/ChartComponent";
+import PortfolioComponent from "./components/PortfolioComponent";
+import ExchangeComponent from "./components/ExchangeComponent";
+import MarketCapComponent from "./components/MarketCapComponent";
 function App() {
   return (
-    <div>
-      <div className="flex mx-5">
-        <Dropdown />
-        <Searchbar />
+    <div className="grid grid-cols-2 gap-7 w-full">
+      <div className="flex flex-col w-full  mx-4">
+        <div className="flex">
+          <Dropdown />
+          <Searchbar />
+        </div>
+        <div className="flex mt-4">
+          <ChartComponent />
+        </div>
+        <div className="flex mt-4">
+          <PortfolioComponent />
+          <ExchangeComponent />
+        </div>
       </div>
-      <div className="flex mx-5">
-        <ChartComponent />
+      <div className="flex ">
+        <MarketCapComponent />
       </div>
     </div>
   );

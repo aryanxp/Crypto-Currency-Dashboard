@@ -6,7 +6,7 @@ import App from "./App";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <div className="min-h-screen bg-primary">
+    <div className="w-screen h-screen bg-primary">
       <App />
     </div>
   </React.StrictMode>
