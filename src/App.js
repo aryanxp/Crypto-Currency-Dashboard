@@ -7,7 +7,7 @@ import ExchangeComponent from "./components/ExchangeComponent";
 import MarketCapComponent from "./components/MarketCapComponent";
 function App() {
   return (
-    <div className="grid grid-cols-2 gap-7 w-full">
+    <div className="grid grid-flow-col grid-cols-1 gap-7">
       <div className="flex flex-col w-full  mx-4">
         <div className="flex">
           <Dropdown />
