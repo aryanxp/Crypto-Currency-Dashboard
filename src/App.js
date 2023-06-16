@@ -1,6 +1,6 @@
 import "./App.css";
 import Searchbar from "./components/Searchbar";
-import Dropdown from "./components/dropdown.js";
+import Dropdown from "./components/Dropdown.js";
 import ChartComponent from "./components/ChartComponent";
 import PortfolioComponent from "./components/PortfolioComponent";
 import ExchangeComponent from "./components/ExchangeComponent";
