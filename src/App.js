@@ -21,7 +21,7 @@ function App() {
           <ExchangeComponent />
         </div>
       </div>
-      <div className="flex bg-black">
+      <div className="">
         <MarketCapComponent />
       </div>
     </div>
