@@ -56,7 +56,7 @@ export const data = {
   ],
 };
 
-function ChatComponent() {
+function ChartComponent() {
   return (
     <div className="ml-7 p-5 bg-white w-full rounded-md drop-shadow-sm">
       USD
@@ -67,4 +67,4 @@ function ChatComponent() {
   );
 }
 
-export default ChatComponent;
+export default ChartComponent;
