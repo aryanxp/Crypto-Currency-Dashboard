@@ -4,15 +4,7 @@ import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 function MarketCapComponent() {
   return (
     <div className="mt-7 mr-2 h-full p-5 bg-white rounded-md drop-shadow-sm w-96">
-      <div className="text-lg font-bold mt-2 mb-3 ">
-        Cryptocurrency by market cap
-      </div>
-      <div>
-        <Component1 />
-        <Component1 />
-        <Component1 />
-        <Component1 />
-      </div>
+      MarketCapComponent
     </div>
   );
 }
