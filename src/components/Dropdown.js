@@ -1,17 +1,21 @@
 import React, { useState } from "react";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
-  const [selectedCurrency, setSelectedCurrency] = useState(null);
+  const [selectedCurrency, setSelectedCurrency] = useState("");
+
   const handleSelectChange = (event) => {
     setSelectedCurrency(event.target.value);
   };
+
   return (
-    <div className="mt-7 ml-7 mx-5">
+    <div className="mt-7 ml-7 mx-5 relative flex items-center">
       <select
         value={selectedCurrency}
         onChange={handleSelectChange}
-        className="p-3 bg-white shadow-sm font-bold rounded"
+        className="p-3 pl-5 pr-10 bg-white shadow-sm font-bold rounded appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 "
       >
+        <option value="">Select Currency</option>
         <option value="USD">USD</option>
         <option value="EUR">EUR</option>
         <option value="CAD">CAD</option>
@@ -32,7 +36,11 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
         <option value="TRY">TRY</option>
         <option value="BRL">BRL</option>
       </select>
+      <div className="absolute right-3 pointer-events-none">
+        <RiArrowDropDownLine size={30} />
+      </div>
     </div>
   );
 };
+
 export default Dropdown;
