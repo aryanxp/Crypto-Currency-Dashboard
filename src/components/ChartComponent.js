@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function ChatComponent() {
+function ChartComponent() {
   const [selectedCryptoCurrency, setSelectedCryptoCurrency] = useState(null);
   const [selectedChart, setSelectedChart] = useState(null);
 
@@ -49,4 +49,4 @@ function ChatComponent() {
   );
 }
 
-export default ChatComponent;
+export default ChartComponent;
