@@ -1,44 +1,87 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
-const Dropdown = ({ options, selected, onSelectedChange }) => {
+const Dropdown = () => {
   const [selectedCurrency, setSelectedCurrency] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const handleSelectChange = (event) => {
+  const handleCurrencyChange = (event) => {
     setSelectedCurrency(event.target.value);
+    setDropdownOpen(false);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownOpen(false);
+      }
+    };
+
+    window.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      window.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
+
+  const currencyOptions = [
+    { value: "USD", label: "USD" },
+    { value: "EUR", label: "EUR" },
+    { value: "CAD", label: "CAD" },
+    { value: "GBP", label: "GBP" },
+    { value: "JPY", label: "JPY" },
+    { value: "CHF", label: "CHF" },
+    { value: "AUD", label: "AUD" },
+    { value: "CNY", label: "CNY" },
+    { value: "NZD", label: "NZD" },
+    { value: "SEK", label: "SEK" },
+    { value: "KRW", label: "KRW" },
+    { value: "SGD", label: "SGD" },
+    { value: "NOK", label: "NOK" },
+    { value: "MXN", label: "MXN" },
+    { value: "INR", label: "INR" },
+    { value: "RUB", label: "RUB" },
+    { value: "ZAR", label: "ZAR" },
+    { value: "TRY", label: "TRY" },
+    { value: "BRL", label: "BRL" },
+  ];
+
   return (
-    <div className="mt-7 ml-7 mx-5 relative flex items-center">
-      <select
-        value={selectedCurrency}
-        onChange={handleSelectChange}
-        className="p-3 pl-5 pr-10 bg-white shadow-sm font-bold rounded appearance-none focus:outline-none focus:ring-2 focus:ring-blue-500 "
+    <div className="relative" ref={dropdownRef}>
+      <button
+        className="mt-7 ml-7 mr-2 relative z-10 flex items-center  p-3 pl-4 pr-2 bg-white shadow-sm font-bold rounded cursor-pointer  focus:ring-1 focus:ring-blue-500"
+        onClick={toggleDropdown}
+        type="button"
       >
-        <option value="">Select Currency</option>
-        <option value="USD">USD</option>
-        <option value="EUR">EUR</option>
-        <option value="CAD">CAD</option>
-        <option value="GBP">GBP</option>
-        <option value="JPY">JPY</option>
-        <option value="CHF">CHF</option>
-        <option value="AUD">AUD</option>
-        <option value="CNY">CNY</option>
-        <option value="NZD">NZD</option>
-        <option value="SEK">SEK</option>
-        <option value="KRW">KRW</option>
-        <option value="SGD">SGD</option>
-        <option value="NOK">NOK</option>
-        <option value="MXN">MXN</option>
-        <option value="INR">INR</option>
-        <option value="RUB">RUB</option>
-        <option value="ZAR">ZAR</option>
-        <option value="TRY">TRY</option>
-        <option value="BRL">BRL</option>
-      </select>
-      <div className="absolute right-3 pointer-events-none">
-        <RiArrowDropDownLine size={30} />
-      </div>
+        {selectedCurrency ? (
+          <span className="font-bold">{selectedCurrency}</span>
+        ) : (
+          <span className="">Select Currency</span>
+        )}
+        <RiArrowDropDownLine className="text-gray-500" size={30} />
+      </button>
+      {dropdownOpen && (
+        <div className="absolute z-50 w-44 ml-7 mt-2 bg-white divide-y divide-gray-100 rounded shadow">
+          <ul className="py-2 text-sm text-gray-700">
+            {currencyOptions.map((option) => (
+              <li
+                key={option.value}
+                onClick={() =>
+                  handleCurrencyChange({ target: { value: option.label } })
+                }
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+              >
+                {option.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
