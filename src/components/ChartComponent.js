@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { LuCalendarDays } from "react-icons/lu";
 import { FiSearch } from "react-icons/fi";
@@ -8,8 +8,9 @@ const Cryptocurrency = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleCryptoCurrency = (e) => {
-    setSelectedCryptoCurrency(e.target.value);
+  const handleCryptoCurrency = (cryptocurrency) => {
+    setSelectedCryptoCurrency(cryptocurrency);
+    setDropdownOpen(false);
   };
 
   const toggleDropdown = () => {
@@ -42,9 +43,11 @@ const Cryptocurrency = () => {
     cryptocurrency.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const dropdownRef = useRef(null);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest("#dropdownSearch")) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropdownOpen(false);
       }
     };
@@ -58,17 +61,17 @@ const Cryptocurrency = () => {
 
   return (
     <div className="px-6 relative">
-      <div className="relative">
+      <div className="relative" ref={dropdownRef}>
         <div
           id="dropdownSearchButton"
           onClick={toggleDropdown}
-          className="relative z-10 flex items-center justify-between w-55 p-2 pl-3 bg-white rounded shadow dark:bg-gray-700 cursor-pointer"
+          className="relative z-10 flex items-center justify-between w-60 px-4 py-2 font-bold text-gray-900 bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
-          <span className=" font-bold text-gray-900 dark:text-white">
+          <span className="font-bold text-gray-900 dark:text-white">
             {selectedCryptoCurrency || "Cryptocurrency"}
           </span>
           <RiArrowDropDownLine
-            className=" text-gray-500 dark:text-gray-400"
+            className="text-gray-500 dark:text-gray-400"
             size={30}
           />
         </div>
@@ -103,20 +106,21 @@ const Cryptocurrency = () => {
               {filteredCryptocurrencies.map((cryptocurrency) => (
                 <div
                   key={cryptocurrency}
-                  className="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer"
-                  onClick={() => setSelectedCryptoCurrency(cryptocurrency)}
+                  className="flex items-center pl-2 rounded cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600"
+                  onClick={() => handleCryptoCurrency(cryptocurrency)}
                 >
                   <input
                     id={`checkbox-item-${cryptocurrency}`}
                     type="checkbox"
                     value={cryptocurrency}
                     checked={selectedCryptoCurrency === cryptocurrency}
-                    onChange={handleCryptoCurrency}
+                    onChange={() => {}}
                     className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                   />
                   <label
                     htmlFor={`checkbox-item-${cryptocurrency}`}
-                    className="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300"
+                    className="w-full py-2 ml-2 text-sm font-medium text-gray-900 rounded dark:text-gray-300 select-none"
+                    onClick={() => handleCryptoCurrency(cryptocurrency)}
                   >
                     {cryptocurrency}
                   </label>
@@ -130,68 +134,113 @@ const Cryptocurrency = () => {
   );
 };
 
-const ChartComponent = () => {
-  const [selectedCryptoCurrency, setSelectedCryptoCurrency] = useState(null);
-  const [selectedChart, setSelectedChart] = useState(null);
-
-  const handleCryptoCurrency = (event) => {
-    setSelectedCryptoCurrency(event.target.value);
-  };
+const ChartType = () => {
+  const [selectedChart, setSelectedChart] = useState("");
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleChartType = (event) => {
     setSelectedChart(event.target.value);
+    setDropdownOpen(false);
   };
 
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const chartOptions = [
+    { value: "Line", label: "Line" },
+    { value: "Graph", label: "Graph" },
+  ];
+
   return (
-    <div className="ml-7 h-52 p-5 bg-white w-full rounded-md drop-shadow-sm">
-      <div className="flex justify-end space-x-1">
-        <button
-          type="button"
-          className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+    <div className="relative ">
+      <button
+        id="dropdownDelayButton"
+        data-dropdown-toggle="dropdownDelay"
+        data-dropdown-delay="500"
+        data-dropdown-trigger="hover"
+        onClick={toggleDropdown}
+        className="relative z-10 flex items-center justify-between w-44 px-4 py-2  font-bold text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+        type="button"
+      >
+        {selectedChart ? (
+          <span className="font-bold">{selectedChart}</span>
+        ) : (
+          <span className="">Chart type</span>
+        )}
+        <RiArrowDropDownLine className="text-gray-500" size={30} />
+      </button>
+      {dropdownOpen && (
+        <div
+          id="dropdownDelay"
+          className="absolute z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44"
         >
-          1D
-        </button>
-        <button
-          type="button"
-          className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-        >
-          1W
-        </button>
-        <button
-          type="button"
-          className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-        >
-          1M
-        </button>
-        <button
-          type="button"
-          className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-        >
-          6M
-        </button>
-        <button
-          type="button"
-          className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-        >
-          1Y
-        </button>
-        <button
-          type="button"
-          className="m- text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-        >
-          <LuCalendarDays size={16} />
-        </button>
-        <Cryptocurrency />
-        <div className="px-6">
-          <select
-            value={selectedChart}
-            onChange={handleChartType}
-            className="p-3 bg-white shadow-sm font-bold rounded"
+          <ul className="py-2 text-sm text-gray-700">
+            {chartOptions.map((option) => (
+              <li
+                key={option.value}
+                onClick={() =>
+                  handleChartType({ target: { value: option.label } })
+                }
+                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+              >
+                {option.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ChartComponent = () => {
+  return (
+    <div className="ml-7 h-52 p-5 bg-white  rounded-md drop-shadow-sm relative z-10">
+      <div className=" flex  mb-5  justify-end flex-wrap  md:flex-nowrap  lg:flex-nowrap w-full">
+        <div className=" flex space-x-2">
+          <button
+            type="button"
+            className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
           >
-            <option value="">Chart type</option>
-            <option value="Line">Line</option>
-            <option value="Graph">Graph</option>
-          </select>
+            1D
+          </button>
+          <button
+            type="button"
+            className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            1W
+          </button>
+          <button
+            type="button"
+            className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            1M
+          </button>
+          <button
+            type="button"
+            className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            6M
+          </button>
+          <button
+            type="button"
+            className="text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            1Y
+          </button>
+          <button
+            type="button"
+            className="m- text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1.5 px-3.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            <LuCalendarDays size={16} />
+          </button>
+        </div>
+        {/* <div className="flex pt-5 md:pt-0 lg:pt-0 xl:pt-0  ">
+        <div className="flex pt-0 sm:pt-5  "> */}
+        <div className="flex ">
+          <Cryptocurrency />
+          <ChartType />
         </div>
       </div>
     </div>
