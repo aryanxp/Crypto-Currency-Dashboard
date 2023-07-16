@@ -2,7 +2,7 @@ import React from "react";
 
 function ExchangeComponent() {
   return (
-    <div className="ml-7 h-52 p-5 bg-white w-full rounded-md drop-shadow-sm">
+    <div className="ml-4 h-52 p-5 bg-white w-full rounded-md drop-shadow-sm">
       <div className="font-bold text-lg">Exchange Coins</div>
 
       <div className="flex items-end">
