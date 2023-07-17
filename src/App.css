@@ -1,0 +1,4 @@
+.absolute.z-50 {
+  /* Existing styles */
+  z-index: 50; /* Increase the z-index value */
+}
